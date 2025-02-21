@@ -899,7 +899,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -982,9 +982,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc253dce45e1254e808ab8b32116466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformLayer:
-    serializedVersion: 2
-    m_Bits: 8
+  platforms:
+  - {fileID: 1726550183}
+  - {fileID: 574850919}
+  - {fileID: 209839120}
   nextSceneName: ExampleScene1
 --- !u!1 &1588650864
 GameObject:
@@ -1318,7 +1319,7 @@ GameObject:
   - component: {fileID: 2141163326}
   m_Layer: 0
   m_Name: player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
