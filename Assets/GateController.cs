@@ -37,27 +37,14 @@ public class GateController : MonoBehaviour
         foreach (Transform platform in platforms)
         {
             
-            if (platform.childCount == 0)
-            {
-                Debug.Log($"Platform {platform.name} has no spheres.");
-                return false;
-            }
-
-            
-            string platformSphereTag = null;
 
             foreach (Transform sphere in platform)
             {
-                
-                string sphereTag = sphere.tag;
-
-                if (platformSphereTag == null)
+               
+                if (platform.tag != sphere.tag)
                 {
-                    platformSphereTag = sphereTag;
-                }
-                else if (platform.tag != sphere.tag)
-                {
-                    Debug.Log($"Platform {platform.name} has spheres with different tags: {platformSphereTag} and {sphereTag}.");
+                    
+                    //Debug.Log($"Platform {platform.name} has spheres with different tags: {platform.tag} and {sphere.tag}.");
                     return false;
                 }
             }
