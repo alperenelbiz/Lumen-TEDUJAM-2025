@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: a
+  m_Name: sand
   m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -414,7 +414,7 @@ Material:
     - _OcclusionStrength: 1
     - _Offset_X_Axis_BLD: -0.05
     - _Offset_Y_Axis_BLD: 0.09
-    - _Offset_Z: -1
+    - _Offset_Z: 0
     - _OutlineOverridden: 0
     - _OutlineVisible: 1
     - _Outline_Width: 40
@@ -538,10 +538,10 @@ Material:
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.83137256, g: 0.65854156, b: 0.15294115, a: 1}
+    - _BaseColor: {r: 0.8301887, g: 0.60071754, b: 0.37123528, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.83137256, g: 0.65854156, b: 0.15294111, a: 1}
+    - _Color: {r: 0.8301887, g: 0.60071754, b: 0.37123522, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
