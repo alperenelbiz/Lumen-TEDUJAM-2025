@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 public class PlayerMovement : MonoBehaviour
@@ -61,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetPosition = transform.position + (direction * gridSize);
         
+        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+        
         // Use DOJump for a small jump effect while moving
         transform.DOJump(targetPosition, jumpPower, jumpCount, moveDuration)
             .SetEase(Ease.OutQuad)
@@ -69,6 +68,8 @@ public class PlayerMovement : MonoBehaviour
                 isMoving = false;
                 UpdateCameraPosition();
             });
+        transform.DORotateQuaternion(targetRotation, moveDuration)
+            .SetEase(Ease.OutQuad);
     }
 
     void UpdateCameraPosition()
