@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a1a3cf31e66504395abf2ab556c75f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 5
+  detectionRange: 1
   platformLayer:
     serializedVersion: 2
     m_Bits: 8
