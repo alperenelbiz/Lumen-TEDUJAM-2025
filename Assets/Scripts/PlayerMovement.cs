@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gridSize = 1f; 
     [SerializeField] private float moveDuration = 0.2f; 
     private bool isMoving = false;
+    [SerializeField] private Rigidbody rb;
     
     [Header("Camera Settings")]
 
@@ -18,13 +19,28 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player Jump Settings")]
     [SerializeField] private float jumpPower = 0.5f; 
     [SerializeField] private int jumpCount = 1;
+    
+    [SerializeField] private LayerMask obstacleLayer;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody component is missing!");
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+
+        rb.isKinematic = false; // Ensure Rigidbody is controlled by physics
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        
         if (cameraTransform == null)
         {
             cameraTransform = Camera.main.transform;
         }
+        
         currentCameraOffset = initialCameraOffset; // Start with initial offset
         UpdateCameraPosition();
     }
@@ -54,31 +70,39 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(Vector3 direction)
     {
-        isMoving = true;
+        if (isMoving) return;
 
         Vector3 targetPosition = transform.position + (direction * gridSize);
-        
+
+        if (Physics.BoxCast(transform.position, Vector3.one * 0.25f, direction, Quaternion.identity, gridSize, obstacleLayer))
+        {
+            Debug.Log("Obstacle detected! Movement blocked.");
+            return;
+        }
+
+        isMoving = true;
+
         Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        
-        // Use DOJump for a small jump effect while moving
-        transform.DOJump(targetPosition, jumpPower, jumpCount, moveDuration)
-            .SetEase(Ease.OutQuad)
+
+        // **Use Rigidbody to move instead of directly modifying transform**
+        rb.DOJump(targetPosition, jumpPower, jumpCount, moveDuration)
+            .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
                 isMoving = false;
                 UpdateCameraPosition();
             });
-        transform.DORotateQuaternion(targetRotation, moveDuration)
-            .SetEase(Ease.OutQuad);
+
+        transform.DORotateQuaternion(targetRotation, moveDuration).SetEase(Ease.Linear);
     }
 
     void UpdateCameraPosition()
     {
         Vector3 targetCameraPosition = transform.position + currentCameraOffset;
         cameraTransform.DOMove(targetCameraPosition, moveDuration)
-            .SetEase(Ease.OutQuad);
+            .SetEase(Ease.Linear);
 
         Quaternion targetRotation = Quaternion.Euler(cameraRotationOffset);
-        cameraTransform.DORotateQuaternion(targetRotation, moveDuration).SetEase(Ease.OutQuad);
+        cameraTransform.DORotateQuaternion(targetRotation, moveDuration).SetEase(Ease.Linear);
     }
 }
