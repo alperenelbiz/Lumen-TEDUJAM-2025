@@ -4,52 +4,61 @@ public class SpherePlacer : MonoBehaviour
 {
     public float detectionRange = 3f; 
     public LayerMask platformLayer; 
-    public Transform blueSphere; 
     public Transform redSphere; 
     public Transform greenSphere; 
+    public Transform blueSphere; 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) 
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            CheckAndPlaceSphere();
+            PlaceSphere(redSphere);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) 
+        {
+            PlaceSphere(greenSphere);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) 
+        {
+            PlaceSphere(blueSphere);
         }
 
+        
         if (Input.GetKeyDown(KeyCode.R)) 
         {
             RetrieveSphere();
         }
     }
 
-    void CheckAndPlaceSphere()
+    void PlaceSphere(Transform sphere)
     {
+        
+        if (sphere.parent != transform)
+        {
+            Debug.LogWarning($"{sphere.tag} sphere is already placed.");
+            return;
+        }
+
         
         Collider[] nearbyPlatforms = Physics.OverlapSphere(transform.position, detectionRange, platformLayer);
 
-        foreach (Collider platform in nearbyPlatforms)
+        if (nearbyPlatforms.Length > 0)
         {
             
-            string platformTag = platform.tag;
+            Transform platform = nearbyPlatforms[0].transform;
 
             
-            if (platformTag == "Blue" || platformTag == "Red" || platformTag == "Green")
-            {
-                
-                Transform sphereToPlace = GetSphereByTag(platformTag);
+            PlaceSphereBelowPlatform(sphere, platform);
 
-                if (sphereToPlace != null)
-                {
-                    
-                    PlaceSphereBelowPlatform(sphereToPlace, platform.transform);
+            
+            sphere.SetParent(platform);
 
-                    
-                    sphereToPlace.SetParent(platform.transform);
-                }
-                else
-                {
-                    Debug.LogWarning($"No sphere found with tag: {platformTag}");
-                }
-            }
+            Debug.Log($"Placed {sphere.tag} sphere below {platform.tag} platform.");
+        }
+        else
+        {
+            Debug.LogWarning("No nearby platform found to place the sphere.");
         }
     }
 
@@ -66,45 +75,24 @@ public class SpherePlacer : MonoBehaviour
                 
                 Transform sphere = platform.transform.GetChild(0);
 
+               
+                sphere.SetParent(transform);
                 
-                if (sphere.CompareTag("Blue") || sphere.CompareTag("Red") || sphere.CompareTag("Green"))
-                {
-                    
-                    sphere.SetParent(transform);
+                
+                sphere.localPosition = Vector3.zero; 
 
-                    
-                    sphere.localPosition = Vector3.zero;
-
-                    Debug.Log($"Retrieved {sphere.tag} sphere from {platform.tag} platform.");
-                }
+                Debug.Log($"Retrieved {sphere.tag} sphere from {platform.tag} platform.");
+                break; 
             }
-        }
-    }
-
-    Transform GetSphereByTag(string tag)
-    {
-        // Return the corresponding sphere based on the tag
-        switch (tag)
-        {
-            case "Blue":
-                return blueSphere;
-            case "Red":
-                return redSphere;
-            case "Green":
-                return greenSphere;
-            default:
-                return null;
         }
     }
 
     void PlaceSphereBelowPlatform(Transform sphere, Transform platform)
     {
-        // Calculate the position below the platform
+        
         Vector3 positionBelowPlatform = platform.position - new Vector3(0, platform.localScale.y / 2 + sphere.localScale.y / 2 - 2, 0);
 
-        // Move the sphere to the calculated position
+       
         sphere.position = positionBelowPlatform;
-
-        Debug.Log($"Placed {sphere.tag} sphere below {platform.tag} platform and reparented it.");
     }
 }
