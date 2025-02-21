@@ -77,7 +77,7 @@ public class SpherePlacer : MonoBehaviour
 
                
                 sphere.SetParent(transform);
-
+                
                 
                 sphere.localPosition = Vector3.zero; 
 
