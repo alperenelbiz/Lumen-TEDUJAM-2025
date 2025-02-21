@@ -38,7 +38,8 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641275, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -225,7 +226,9 @@ GameObject:
   m_Component:
   - component: {fileID: 990932654}
   - component: {fileID: 990932653}
+
   - component: {fileID: 990932655}
+
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -310,6 +313,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+
 --- !u!114 &990932655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +337,7 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+
 --- !u!1 &1467713063
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,11 +478,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: 1
   moveDuration: 0.2
+
   isMoving: 0
   cameraTransform: {fileID: 0}
   initialCameraOffset: {x: 0, y: 5, z: -5}
   cameraRotationOffset: {x: 45, y: 0, z: 0}
   currentCameraOffset: {x: 0, y: 0, z: 0}
+
   jumpPower: 0.5
   jumpCount: 1
 --- !u!65 &1468312489
