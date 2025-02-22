@@ -7,7 +7,7 @@ public class SpherePlacer : MonoBehaviour
     public LayerMask platformLayer; 
     public Transform redSphere; 
     public Transform greenSphere; 
-    public Transform blueSphere; 
+    public Transform blueSphere;
     public float throwForce = 10f; 
     public float sphereSize = 0.5f;
     public float lookRange = 10f;
