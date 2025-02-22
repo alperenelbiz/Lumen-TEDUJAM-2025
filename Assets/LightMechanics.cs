@@ -35,8 +35,7 @@ public class SpherePlacer : MonoBehaviour
 
         if (throwMode)
         {
-            retrieveMode = false;
-            remoteRetrieveMode = false;
+            
             HandleThrowInput();
         }
         //else if (retrieveMode)
@@ -47,8 +46,7 @@ public class SpherePlacer : MonoBehaviour
         //}
         else if (remoteRetrieveMode)
         {
-            throwMode= false;
-            retrieveMode = false;
+            
             HandleRemoteRetrieveInput();
         }
         else
@@ -60,6 +58,8 @@ public class SpherePlacer : MonoBehaviour
     void ToggleThrowMode()
     {
         throwMode = !throwMode;
+        retrieveMode = false;
+        remoteRetrieveMode = false;
         Debug.Log($"Throw mode: {throwMode}");
     }
 
@@ -72,6 +72,8 @@ public class SpherePlacer : MonoBehaviour
     void ToggleRemoteRetrieveMode()
     {
         remoteRetrieveMode = !remoteRetrieveMode;
+        throwMode = false;
+        retrieveMode = false;
         Debug.Log($"Remote retrieve mode: {remoteRetrieveMode}");
     }
 
