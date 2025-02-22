@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SpherePlacer : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class SpherePlacer : MonoBehaviour
     public float throwForce = 10f;
     public float sphereSize = 0.5f;
     public float lookRange = 10f;
+
+    public RawImage rImage;
+    public RawImage tImage;
 
     private bool throwMode = false; // Track if the player is in throw mode
     private bool retrieveMode = false; // Track if the player is in retrieve mode
@@ -62,26 +66,58 @@ public class SpherePlacer : MonoBehaviour
         }
     }
 
-    void ToggleThrowMode()
-    {
-        throwMode = !throwMode;
-        retrieveMode = false;
-        remoteRetrieveMode = false;
-        Debug.Log($"Throw mode: {throwMode}");
-    }
-
     void ToggleRetrieveMode()
     {
         retrieveMode = !retrieveMode;
         Debug.Log($"Retrieve mode: {retrieveMode}");
     }
-
     void ToggleRemoteRetrieveMode()
     {
         remoteRetrieveMode = !remoteRetrieveMode;
         throwMode = false;
         retrieveMode = false;
+
+        UpdateImageTransparency();
         Debug.Log($"Remote retrieve mode: {remoteRetrieveMode}");
+    }
+
+    void ToggleThrowMode()
+    {
+        throwMode = !throwMode;
+        retrieveMode = false;
+        remoteRetrieveMode = false;
+
+        UpdateImageTransparency();
+        Debug.Log($"Throw mode: {throwMode}");
+    }
+
+    void UpdateImageTransparency()
+    {
+        // If remoteRetrieveMode is active, set rImage fully visible and tImage semi-transparent
+        if (remoteRetrieveMode)
+        {
+            SetImageAlpha(rImage, 1f); // Fully visible
+            SetImageAlpha(tImage, 0.3f); // Semi-transparent
+        }
+        // If throwMode is active, set tImage fully visible and rImage semi-transparent
+        else if (throwMode)
+        {
+            SetImageAlpha(rImage, 0.3f);
+            SetImageAlpha(tImage, 1f);
+        }
+        // If neither mode is active, set both to semi-transparent
+        else
+        {
+            SetImageAlpha(rImage, 0.3f);
+            SetImageAlpha(tImage, 0.3f);
+        }
+    }
+
+    void SetImageAlpha(RawImage image, float alpha)
+    {
+        Color color = image.color;
+        color.a = alpha;
+        image.color = color;
     }
 
     void HandleThrowInput()
