@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class GateController : MonoBehaviour
 {
@@ -31,8 +33,6 @@ public class GateController : MonoBehaviour
             Debug.LogWarning("No platforms assigned in the list.");
             return false;
         }
-
-       
 
         foreach (Transform platform in platforms)
         {
@@ -74,4 +74,5 @@ public class GateController : MonoBehaviour
             Debug.LogWarning("Next scene name is not set.");
         }
     }
+    
 }
