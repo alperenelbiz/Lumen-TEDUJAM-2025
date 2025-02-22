@@ -16,6 +16,13 @@ public class SpherePlacer : MonoBehaviour
     private bool retrieveMode = false; // Track if the player is in retrieve mode
     private bool remoteRetrieveMode = false; // Track if the player is in remote retrieve mode
 
+    private void Start()
+    {
+        redSphere.gameObject.SetActive(false);
+        greenSphere.gameObject.SetActive(false);
+        blueSphere.gameObject.SetActive(false);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -155,15 +162,18 @@ public class SpherePlacer : MonoBehaviour
 
         if (IsLookingAtPlatform(out Vector3 lookDirection, out Transform platform))
         {
+            Vector3 targetPosition;
             sphere.SetParent(null);
-
-            Vector3 targetPosition = platform.position - new Vector3(0, platform.localScale.y / 2 + sphere.localScale.y / 2 - 2, 0);
+            if (platform.gameObject.layer == 10) { targetPosition = platform.position; }
+            else
+                targetPosition = platform.position - new Vector3(0, platform.localScale.y / 2 + sphere.localScale.y / 2 - 2, 0);
 
             StartCoroutine(MoveSphereToPosition(sphere, targetPosition));
 
             sphere.SetParent(platform);
             Debug.Log($"Threw {sphere.tag} sphere towards {platform.name}.");
         }
+
         else
         {
             Debug.Log("Not looking at a platform.");
@@ -172,6 +182,7 @@ public class SpherePlacer : MonoBehaviour
 
     IEnumerator MoveSphereToPosition(Transform sphere, Vector3 targetPosition)
     {
+        sphere.gameObject.SetActive(true);
         Rigidbody sphereRb = sphere.GetComponent<Rigidbody>();
         if (sphereRb == null)
         {
@@ -189,8 +200,29 @@ public class SpherePlacer : MonoBehaviour
 
         sphereRb.velocity = Vector3.zero;
         Debug.Log($"{sphere.tag} sphere reached the target position.");
+        sphere.gameObject.SetActive(false);
     }
+    IEnumerator MovePlatformToPlayer(Transform sphere, Vector3 targetPosition)
+    {
+        sphere.gameObject.SetActive(true);
+        Rigidbody sphereRb = sphere.GetComponent<Rigidbody>();
 
+        sphereRb.useGravity = false;
+
+        float speed = 10f;
+        while (Vector3.Distance(sphere.position, targetPosition) > 0.1f)
+        {
+            sphereRb.velocity = (targetPosition - sphere.position).normalized * speed;
+
+            yield return null;
+        }
+
+        sphereRb.velocity = Vector3.zero;
+
+        Debug.Log($"{sphere.tag} sphere reached the target position.");
+        Destroy(sphereRb);
+        sphere.gameObject.SetActive(false);
+    }
     void PlaceSphere(Transform sphere)
     {
         if (sphere.parent != transform)
@@ -257,7 +289,7 @@ public class SpherePlacer : MonoBehaviour
 
     void RemoteRetrieveSphere(string sphereTag)
     {
-        
+
         if (IsLookingAtPlatform(out Vector3 lookDirection, out Transform platform))
         {
             if (platform.childCount > 0)
@@ -270,18 +302,20 @@ public class SpherePlacer : MonoBehaviour
                         sphere = child;
                         break;
                     }
+
                 }
+                StartCoroutine(MovePlatformToPlayer(sphere, transform.position));
 
                 if (sphere != null)
                 {
-                    Rigidbody sphereRb = sphere.GetComponent<Rigidbody>();
-                    if (sphereRb != null)
-                    {
-                        Destroy(sphereRb);
-                        Debug.Log($"Removed Rigidbody from {sphere.tag} sphere.");
-                    }
+                    //Rigidbody sphereRb = sphere.GetComponent<Rigidbody>();
+                    //if (sphereRb != null)
+                    //{
+                    //    Destroy(sphereRb);
+                    //    Debug.Log($"Removed Rigidbody from {sphere.tag} sphere.");
+                    //}
 
-                    sphere.SetParent(transform);
+
 
                     sphere.localPosition = Vector3.zero;
 
@@ -291,6 +325,7 @@ public class SpherePlacer : MonoBehaviour
                 {
                     Debug.Log($"No {sphereTag} sphere found on the platform.");
                 }
+                sphere.SetParent(transform);
             }
             else
             {
