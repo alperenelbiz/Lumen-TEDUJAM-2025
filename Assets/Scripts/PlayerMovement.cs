@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.BoxCast(transform.position, Vector3.one * 0.25f, direction, Quaternion.identity, gridSize, obstacleLayer))
         {
-            Debug.Log("Obstacle detected! Movement blocked.");
+            Debug.Log("Obstacle detected! Movement blocked. " + obstacleLayer);
             return;
         }
 
