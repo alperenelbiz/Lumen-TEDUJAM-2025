@@ -82,7 +82,7 @@ public class ColorManager : SingletonBehaviour<ColorManager>
             StartCoroutine(FadeOutAndStop()); // Fade out before stopping the effect
             return;
         }
-
+         
         if (redActive && blueActive && greenActive)
         {
             targetVFX = whiteVFX;
