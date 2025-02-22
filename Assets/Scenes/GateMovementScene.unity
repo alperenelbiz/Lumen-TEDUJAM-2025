@@ -777,6 +777,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1806023828549466750, guid: 1812377abeefb1b4286b3fdc5cce0a99,
         type: 3}
+      propertyPath: platformGatePairs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806023828549466750, guid: 1812377abeefb1b4286b3fdc5cce0a99,
+        type: 3}
       propertyPath: platformGatePairs.Array.data[0].gate
       value: 
       objectReference: {fileID: 248166908825891290}
@@ -788,6 +793,11 @@ PrefabInstance:
     - target: {fileID: 1806023828549466750, guid: 1812377abeefb1b4286b3fdc5cce0a99,
         type: 3}
       propertyPath: platformGatePairs.Array.data[2].gate
+      value: 
+      objectReference: {fileID: 248166910040350233}
+    - target: {fileID: 1806023828549466750, guid: 1812377abeefb1b4286b3fdc5cce0a99,
+        type: 3}
+      propertyPath: platformGatePairs.Array.data[3].gate
       value: 
       objectReference: {fileID: 248166910040350233}
     - target: {fileID: 1806023828549466750, guid: 1812377abeefb1b4286b3fdc5cce0a99,
@@ -805,6 +815,21 @@ PrefabInstance:
       propertyPath: platformGatePairs.Array.data[2].platform
       value: 
       objectReference: {fileID: 3387962950709748818}
+    - target: {fileID: 1806023828549466750, guid: 1812377abeefb1b4286b3fdc5cce0a99,
+        type: 3}
+      propertyPath: platformGatePairs.Array.data[3].platform
+      value: 
+      objectReference: {fileID: 3387962950709748818}
+    - target: {fileID: 1806023828549466750, guid: 1812377abeefb1b4286b3fdc5cce0a99,
+        type: 3}
+      propertyPath: platformGatePairs.Array.data[2].requiredTag
+      value: Cyan
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806023828549466750, guid: 1812377abeefb1b4286b3fdc5cce0a99,
+        type: 3}
+      propertyPath: platformGatePairs.Array.data[3].requiredTag
+      value: Cyan
+      objectReference: {fileID: 0}
     - target: {fileID: 7477702275056906639, guid: 1812377abeefb1b4286b3fdc5cce0a99,
         type: 3}
       propertyPath: m_Name
@@ -1116,6 +1141,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: platform (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5763226464293016192, guid: 603b73da786bb8449b17c7aa072af894,
+        type: 3}
+      propertyPath: m_TagString
+      value: Cyan
       objectReference: {fileID: 0}
     - target: {fileID: 8153160979788887718, guid: 603b73da786bb8449b17c7aa072af894,
         type: 3}
