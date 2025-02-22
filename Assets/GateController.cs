@@ -36,10 +36,14 @@ public class GateController : MonoBehaviour
 
         foreach (Transform platform in platforms)
         {
-            
-
+            if (platform.childCount == 0)
+            {
+                
+                return false;
+            }
             foreach (Transform sphere in platform)
             {
+
                
                 if (platform.tag != sphere.tag)
                 {
