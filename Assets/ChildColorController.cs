@@ -28,6 +28,6 @@ public class ChildColorController : MonoBehaviour
         else
         {
             vfx.enabled = true; // Enable VFX if object is not a child of the player
-        }
+}
     }
 }

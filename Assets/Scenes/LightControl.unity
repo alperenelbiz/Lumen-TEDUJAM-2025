@@ -5571,7 +5571,7 @@ GameObject:
   - component: {fileID: 1106351137}
   m_Layer: 0
   m_Name: BlueLighter
-  m_TagString: Untagged
+  m_TagString: lighter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6187,7 +6187,7 @@ GameObject:
   - component: {fileID: 1223479435}
   m_Layer: 0
   m_Name: RedLighter
-  m_TagString: Untagged
+  m_TagString: lighter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8000,7 +8000,7 @@ GameObject:
   - component: {fileID: 1484019225}
   m_Layer: 0
   m_Name: GreenLighter
-  m_TagString: Untagged
+  m_TagString: lighter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9433,7 +9433,7 @@ GameObject:
   - component: {fileID: 1833395360}
   m_Layer: 0
   m_Name: PlayerLighter
-  m_TagString: Untagged
+  m_TagString: lighter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13896,6 +13896,12 @@ MonoBehaviour:
   - lighterObject: {fileID: 1223479433}
     vfxComponent: {fileID: 1223479436}
     parent: {fileID: 8050223604875164494}
+  - lighterObject: {fileID: 1106351135}
+    vfxComponent: {fileID: 1106351138}
+    parent: {fileID: 5684460466971715360}
+  - lighterObject: {fileID: 1484019223}
+    vfxComponent: {fileID: 1484019226}
+    parent: {fileID: 6763606122033320305}
   redObject: {fileID: 1565232626}
   blueObject: {fileID: 1950740412}
   greenObject: {fileID: 590833956}
@@ -14313,7 +14319,6 @@ GameObject:
   - component: {fileID: 9179544358188473587}
   - component: {fileID: 1239381224634775763}
   - component: {fileID: 6024942252599021991}
-  - component: {fileID: 9179544358188473588}
   m_Layer: 3
   m_Name: platform (1)
   m_TagString: Blue
@@ -15596,30 +15601,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5684460466971715360}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &9179544358188473588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5684460466971715360}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85cba629ac9154eadb76229fc275567e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lighters: []
-  redObject: {fileID: 0}
-  blueObject: {fileID: 0}
-  greenObject: {fileID: 0}
-  redVFX: {fileID: 0}
-  blueVFX: {fileID: 0}
-  greenVFX: {fileID: 0}
-  whiteVFX: {fileID: 0}
-  cyanVFX: {fileID: 0}
-  magentaVFX: {fileID: 0}
-  yellowVFX: {fileID: 0}
-  lerpSpeed: 2
 --- !u!23 &9189963145788988874
 MeshRenderer:
   m_ObjectHideFlags: 0
