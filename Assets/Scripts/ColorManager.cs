@@ -5,6 +5,7 @@ using UnityEngine.VFX;
 public class ColorManager : SingletonBehaviour<ColorManager>
 {
     [SerializeField] private VisualEffect vfx; // Assign the VFX component on "lighter"
+    private bool isVFXPlaying = false; // Flag to check if the VFX is playing
     
     [SerializeField] private GameObject player; // The player object
     [SerializeField] private GameObject redObject, blueObject, greenObject; // Child objects
@@ -23,6 +24,8 @@ public class ColorManager : SingletonBehaviour<ColorManager>
     private float fadeValue = 1f; 
 
     [SerializeField] private float lerpSpeed = 2f; 
+    [SerializeField] private float coefficient = 0.3f;
+    
 
     void Start()
     {
@@ -108,50 +111,49 @@ public class ColorManager : SingletonBehaviour<ColorManager>
         {
             targetVFX = greenVFX;
         }
-
         
-        if (vfx.visualEffectAsset != targetVFX)
+        if (!isVFXPlaying || vfx.visualEffectAsset != targetVFX)
         {
             StopAllCoroutines(); // Ensure we don't start multiple coroutines at once
             ColorManager.Instance.StartCoroutine(SmoothVFXTransition()); // Start the transition
+            isVFXPlaying = true; // Set the flag to prevent starting multiple coroutines
         }
     }
     
     IEnumerator SmoothVFXTransition()
     {
-        float duration = 2f; // Duration of transition in seconds
+        float fadeDuration = 2f; // Duration for fade-out and fade-in
         float elapsedTime = 0f;
 
-        // Fade Out Current Effect
-        while (fadeValue > 0f)
+        while (fadeValue > 0.1f)
         {
-            fadeValue = Mathf.MoveTowards(fadeValue, 0f, Time.deltaTime / duration);
+            fadeValue = Mathf.MoveTowards(fadeValue, 0f, Time.deltaTime * lerpSpeed);
             if (vfx.HasFloat("Intensity"))
             {
                 vfx.SetFloat("Intensity", fadeValue);
             }
-            elapsedTime += Time.deltaTime;
+            //elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Switch to new effect
         vfx.visualEffectAsset = targetVFX;
         vfx.Reinit();
-    
+        vfx.Play();// Restart the effect to apply changes
+
         elapsedTime = 0f;
 
-        // Fade In New Effect
         while (fadeValue < 1f)
         {
-            fadeValue = Mathf.MoveTowards(fadeValue, 1f, Time.deltaTime / duration);
+            fadeValue = Mathf.MoveTowards(fadeValue, 1f, Time.deltaTime * lerpSpeed);
             if (vfx.HasFloat("Intensity"))
             {
                 vfx.SetFloat("Intensity", fadeValue);
             }
-            elapsedTime += Time.deltaTime;
+            //elapsedTime += Time.deltaTime;
             yield return null;
         }
     }
+
 
     IEnumerator FadeOutAndStop()
     {
@@ -164,8 +166,9 @@ public class ColorManager : SingletonBehaviour<ColorManager>
             }
             yield return null;
         }
-
+        
         vfx.Stop();
+        isVFXPlaying = false;
     }
 }
 
