@@ -10,80 +10,86 @@ public class GateMovement : MonoBehaviour
     {
         public Transform platform; // The platform to check
         public GameObject gate;   // The gate connected to this platform
-        public string requiredTag; // The required tag for the sphere (e.g., "Red", "Green", "Blue")
+        public List<string> requiredTags; // ✅ List of required tags for the sphere
         public bool isOpen = false; // Is the gate open?
     }
 
     public List<PlatformGatePair> platformGatePairs; // List of platform-gate pairs
-    [SerializeField] private float moveDuration = 1.5f; 
+    [SerializeField] private float moveDuration = 1.5f;
     [SerializeField] private float moveDistance = 5f;
-
 
     void Update()
     {
-        // Check all platform-gate pairs
         foreach (var pair in platformGatePairs)
         {
-            // Check if the platform has the correct sphere
-            bool isCorrectSpherePlaced = CheckPlatformForCorrectSphere(pair.platform, pair.requiredTag);
+            bool isCorrectSpherePlaced = CheckPlatformForCorrectSphere(pair.platform, pair.requiredTags);
 
-            // Open or close the gate based on the result
             if (isCorrectSpherePlaced && !pair.isOpen)
             {
                 OpenGate(pair);
             }
-            else if(!isCorrectSpherePlaced && pair.isOpen)
+            else if (!isCorrectSpherePlaced && pair.isOpen)
             {
                 CloseGate(pair);
             }
         }
     }
 
-    bool CheckPlatformForCorrectSphere(Transform platform, string requiredTag)
+    bool CheckPlatformForCorrectSphere(Transform platform, List<string> requiredTags)
     {
-        // Check if the platform has at least one child sphere
         if (platform.childCount == 0)
         {
-            return false;
+            Debug.Log($"❌ No objects found on platform {platform.name}");
+            return false; // No objects present
         }
 
-        // Check all child spheres on the platform
+        HashSet<string> foundTags = new HashSet<string>();
+
+        // Collect all tags from child objects
         foreach (Transform sphere in platform)
         {
-            // If any sphere has the correct tag, return true
-            if (sphere.CompareTag(requiredTag))
-            {
-                return true;
-            }
+            foundTags.Add(sphere.tag);
         }
 
-        // No sphere with the correct tag was found
-        return false;
+        Debug.Log($"🔎 Found tags on {platform.name}: {string.Join(", ", foundTags)}");
+        Debug.Log($"✅ Required tags: {string.Join(", ", requiredTags)}");
+
+        // Ensure the found tags match the required tags exactly (no extra or missing tags)
+        bool isMatch = foundTags.SetEquals(requiredTags);
+
+        if (!isMatch)
+        {
+            Debug.Log($"❌ Tags do not match exactly for {platform.name}");
+        }
+        else
+        {
+            Debug.Log($"✅ Correct tags placed for {platform.name}, gate should open.");
+        }
+
+        return isMatch;
     }
 
     void OpenGate(PlatformGatePair pair)
     {
         if (pair.gate == null) return;
 
-        pair.isOpen = true; // ✅ Now correctly modifies isOpen state
-        
+        pair.isOpen = true;
+
         pair.gate.transform.DOMoveY(pair.gate.transform.position.y - moveDistance, moveDuration)
             .SetEase(Ease.InOutQuad);
 
-        Debug.Log($"Gate {pair.gate.name} opened.");
+        Debug.Log($"🚪 Gate {pair.gate.name} opened.");
     }
 
     void CloseGate(PlatformGatePair pair)
     {
         if (pair.gate == null) return;
 
-        pair.isOpen = false; // ✅ Now correctly modifies isOpen state
+        pair.isOpen = false;
 
-        
         pair.gate.transform.DOMoveY(pair.gate.transform.position.y + moveDistance, moveDuration)
             .SetEase(Ease.InOutQuad);
 
-        Debug.Log($"Gate {pair.gate.name} closed.");
+        Debug.Log($"🚪 Gate {pair.gate.name} closed.");
     }
-
 }
