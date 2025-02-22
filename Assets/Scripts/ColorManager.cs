@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.VFX;
 
-public class ColorManager : SingletonBehaviour<ColorManager>
+public class ColorManager : MonoBehaviour
 {
     [System.Serializable]
     public class Lighter
@@ -11,12 +11,13 @@ public class ColorManager : SingletonBehaviour<ColorManager>
         public GameObject lighterObject;
         public VisualEffect vfxComponent;
         public GameObject parent;
+        public float fadeValue = 1f;
     }
-    
+
     [SerializeField] private List<Lighter> lighters = new List<Lighter>();
-    
+
     [SerializeField] private GameObject redObject, blueObject, greenObject;
-    
+
     [SerializeField] private VisualEffectAsset redVFX;
     [SerializeField] private VisualEffectAsset blueVFX;
     [SerializeField] private VisualEffectAsset greenVFX;
@@ -24,11 +25,11 @@ public class ColorManager : SingletonBehaviour<ColorManager>
     [SerializeField] private VisualEffectAsset cyanVFX;
     [SerializeField] private VisualEffectAsset magentaVFX;
     [SerializeField] private VisualEffectAsset yellowVFX;
-    
+
     private Dictionary<Lighter, Coroutine> activeCoroutines = new Dictionary<Lighter, Coroutine>();
-    private float fadeValue = 1f;
+    //private float fadeValue = 1f;
     [SerializeField] private float lerpSpeed = 2f;
-    
+
     void Start()
     {
         foreach (var lighter in lighters)
@@ -46,7 +47,7 @@ public class ColorManager : SingletonBehaviour<ColorManager>
             }
         }
     }
-    
+
     void Update()
     {
         CheckColor();
@@ -56,12 +57,16 @@ public class ColorManager : SingletonBehaviour<ColorManager>
     {
         foreach (var lighter in lighters)
         {
-            bool redActive = redObject != null && redObject.transform.parent == lighter.parent.transform;
-            bool blueActive = blueObject != null && blueObject.transform.parent == lighter.parent.transform;
-            bool greenActive = greenObject != null && greenObject.transform.parent == lighter.parent.transform;
+            bool redActive = redObject != null && redObject.transform.IsChildOf(lighter.parent.transform);
+            bool blueActive = blueObject != null && blueObject.transform.IsChildOf(lighter.parent.transform);
+            bool greenActive = greenObject != null && greenObject.transform.IsChildOf(lighter.parent.transform);
 
+            Debug.Log($"Lighter: {lighter.lighterObject.name} | Parent: {lighter.parent.name} | RedObject Parent: {redObject?.transform.parent?.name}");
+            Debug.Log($"Checking if {redObject?.name} is child of {lighter.parent.name}: {redObject?.transform.IsChildOf(lighter.parent.transform)}");
+            Debug.Log($"Checking if {blueObject?.name} is child of {lighter.parent.name}: {blueObject?.transform.IsChildOf(lighter.parent.transform)}");
+            Debug.Log($"Checking if {greenObject?.name} is child of {lighter.parent.name}: {greenObject?.transform.IsChildOf(lighter.parent.transform)}");
             VisualEffectAsset targetVFX = null;
-            
+
             if (!redActive && !blueActive && !greenActive)
             {
                 if (activeCoroutines.ContainsKey(lighter) && activeCoroutines[lighter] != null)
@@ -76,27 +81,28 @@ public class ColorManager : SingletonBehaviour<ColorManager>
             {
                 targetVFX = whiteVFX;
             }
-            else if (redActive && blueActive)
+
+            else if (redActive && blueActive && !greenActive)
             {
                 targetVFX = magentaVFX;
             }
-            else if (blueActive && greenActive)
+            else if (blueActive && greenActive && !redActive)
             {
                 targetVFX = cyanVFX;
             }
-            else if (redActive && greenActive)
+            else if (redActive && greenActive && !blueActive)
             {
                 targetVFX = yellowVFX;
             }
-            else if (redActive)
+            else if (redActive && !blueActive && !greenActive)
             {
                 targetVFX = redVFX;
             }
-            else if (blueActive)
+            else if (blueActive && !redActive && !greenActive)
             {
                 targetVFX = blueVFX;
             }
-            else if (greenActive)
+            else if (greenActive && !redActive && !blueActive)
             {
                 targetVFX = greenVFX;
             }
@@ -106,6 +112,7 @@ public class ColorManager : SingletonBehaviour<ColorManager>
                 if (activeCoroutines.ContainsKey(lighter) && activeCoroutines[lighter] != null)
                 {
                     StopCoroutine(activeCoroutines[lighter]);
+                    activeCoroutines.Remove(lighter);
                 }
                 activeCoroutines[lighter] = StartCoroutine(SmoothVFXTransition(lighter, targetVFX));
             }
@@ -114,12 +121,12 @@ public class ColorManager : SingletonBehaviour<ColorManager>
 
     IEnumerator SmoothVFXTransition(Lighter lighter, VisualEffectAsset targetVFX)
     {
-        while (fadeValue > 0.1f)
+        while (lighter.fadeValue > 0.1f)
         {
-            fadeValue = Mathf.MoveTowards(fadeValue, 0f, Time.deltaTime * lerpSpeed);
+            lighter.fadeValue = Mathf.MoveTowards(lighter.fadeValue, 0f, Time.deltaTime * lerpSpeed);
             if (lighter.vfxComponent.HasFloat("Intensity"))
             {
-                lighter.vfxComponent.SetFloat("Intensity", fadeValue);
+                lighter.vfxComponent.SetFloat("Intensity", lighter.fadeValue);
             }
             yield return null;
         }
@@ -128,12 +135,12 @@ public class ColorManager : SingletonBehaviour<ColorManager>
         lighter.vfxComponent.Reinit();
         lighter.vfxComponent.Play();
 
-        while (fadeValue < 1f)
+        while (lighter.fadeValue < 1f)
         {
-            fadeValue = Mathf.MoveTowards(fadeValue, 1f, Time.deltaTime * lerpSpeed);
+            lighter.fadeValue = Mathf.MoveTowards(lighter.fadeValue, 1f, Time.deltaTime * lerpSpeed);
             if (lighter.vfxComponent.HasFloat("Intensity"))
             {
-                lighter.vfxComponent.SetFloat("Intensity", fadeValue);
+                lighter.vfxComponent.SetFloat("Intensity", lighter.fadeValue);
             }
             yield return null;
         }
@@ -141,16 +148,16 @@ public class ColorManager : SingletonBehaviour<ColorManager>
 
     IEnumerator FadeOutAndStop(Lighter lighter)
     {
-        while (fadeValue > 0.1f)
+        while (lighter.fadeValue > 0.1f)
         {
-            fadeValue = Mathf.Lerp(fadeValue, 0f, Time.deltaTime * lerpSpeed);
+            lighter.fadeValue = Mathf.Lerp(lighter.fadeValue, 0f, Time.deltaTime * lerpSpeed);
             if (lighter.vfxComponent.HasFloat("Intensity"))
             {
-                lighter.vfxComponent.SetFloat("Intensity", fadeValue);
+                lighter.vfxComponent.SetFloat("Intensity", lighter.fadeValue);
             }
             yield return null;
         }
-        
+
         lighter.vfxComponent.Stop();
     }
 }
