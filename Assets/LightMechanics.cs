@@ -23,12 +23,12 @@ public class SpherePlacer : MonoBehaviour
             ToggleThrowMode();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ToggleRetrieveMode();
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    ToggleRetrieveMode();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             ToggleRemoteRetrieveMode();
         }
@@ -39,12 +39,12 @@ public class SpherePlacer : MonoBehaviour
             remoteRetrieveMode = false;
             HandleThrowInput();
         }
-        else if (retrieveMode)
-        {
-            throwMode = false;
-            remoteRetrieveMode = false;
-            HandleRetrieveInput();
-        }
+        //else if (retrieveMode)
+        //{
+        //    throwMode = false;
+        //    remoteRetrieveMode = false;
+        //    HandleRetrieveInput();
+        //}
         else if (remoteRetrieveMode)
         {
             throwMode= false;

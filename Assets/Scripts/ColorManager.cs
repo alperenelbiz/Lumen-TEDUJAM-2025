@@ -35,7 +35,7 @@ public class ColorManager : SingletonBehaviour<ColorManager>
         {
             if (lighter.vfxComponent == null)
             {
-                Debug.LogError($"VFX Component is missing on {lighter.lighterObject.name}! Assign it in the Inspector.");
+                //Debug.LogError($"VFX Component is missing on {lighter.lighterObject.name}! Assign it in the Inspector.");
                 continue;
             }
             if (whiteVFX != null)

@@ -39,7 +39,7 @@ public class GateMovement : MonoBehaviour
     {
         if (platform.childCount == 0)
         {
-            Debug.Log($"❌ No objects found on platform {platform.name}");
+            //Debug.Log($"❌ No objects found on platform {platform.name}");
             return false; // No objects present
         }
 
@@ -51,19 +51,19 @@ public class GateMovement : MonoBehaviour
             foundTags.Add(sphere.tag);
         }
 
-        Debug.Log($"🔎 Found tags on {platform.name}: {string.Join(", ", foundTags)}");
-        Debug.Log($"✅ Required tags: {string.Join(", ", requiredTags)}");
+        //Debug.Log($"🔎 Found tags on {platform.name}: {string.Join(", ", foundTags)}");
+        //Debug.Log($"✅ Required tags: {string.Join(", ", requiredTags)}");
 
         // Ensure the found tags match the required tags exactly (no extra or missing tags)
         bool isMatch = foundTags.SetEquals(requiredTags);
 
         if (!isMatch)
         {
-            Debug.Log($"❌ Tags do not match exactly for {platform.name}");
+            //Debug.Log($"❌ Tags do not match exactly for {platform.name}");
         }
         else
         {
-            Debug.Log($"✅ Correct tags placed for {platform.name}, gate should open.");
+            //Debug.Log($"✅ Correct tags placed for {platform.name}, gate should open.");
         }
 
         return isMatch;
