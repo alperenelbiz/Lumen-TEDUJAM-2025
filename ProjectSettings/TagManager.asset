@@ -9,6 +9,8 @@ TagManager:
   - Green
   - lighter
   - Cyan
+  - RestartLevel
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
