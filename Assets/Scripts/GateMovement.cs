@@ -75,10 +75,12 @@ public class GateMovement : MonoBehaviour
 
         pair.isOpen = true;
 
+        //AudioManager.Instance.PlayGateSound();
+
         pair.gate.transform.DOMoveY(pair.gate.transform.position.y - moveDistance, moveDuration)
             .SetEase(Ease.InOutQuad);
 
-        Debug.Log($"🚪 Gate {pair.gate.name} opened.");
+        Debug.Log($" Gate {pair.gate.name} opened.");
     }
 
     void CloseGate(PlatformGatePair pair)
@@ -90,6 +92,6 @@ public class GateMovement : MonoBehaviour
         pair.gate.transform.DOMoveY(pair.gate.transform.position.y + moveDistance, moveDuration)
             .SetEase(Ease.InOutQuad);
 
-        Debug.Log($"🚪 Gate {pair.gate.name} closed.");
+        Debug.Log($"Gate {pair.gate.name} closed.");
     }
 }

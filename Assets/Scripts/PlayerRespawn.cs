@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerRespawn : MonoBehaviour
 {
@@ -10,7 +12,8 @@ public class PlayerRespawn : MonoBehaviour
         if (collision.gameObject.CompareTag("RestartLevel"))
         {
             Debug.Log("You died!");
-            ReSpawnManager.Instance.ReSpawnPlayer();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            AudioManager.Instance.PlayCharacterRespawnSound();
         }
     }
 }

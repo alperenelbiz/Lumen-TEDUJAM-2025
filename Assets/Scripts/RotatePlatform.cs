@@ -55,7 +55,7 @@ public class RotatePlatform : MonoBehaviour
         pair.isRotating = true;
         pair.hasRotated = true;
 
-
+        AudioManager.Instance.PlayPlatformRotateSound();
         Vector3 centerPoint = (pair.rotatePlatforms[0].position + pair.rotatePlatforms[1].position) / 2;
         Vector3 direction0 = pair.rotatePlatforms[0].position - centerPoint;
         Vector3 direction1 = pair.rotatePlatforms[1].position - centerPoint;

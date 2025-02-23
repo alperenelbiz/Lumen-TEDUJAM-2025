@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = true;
 
         Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-
+        //AudioManager.Instance.PlayWalkingSound();
         // **Use Rigidbody to move instead of directly modifying transform**
         rb.DOJump(targetPosition, jumpPower, jumpCount, moveDuration)
             .SetEase(Ease.Linear)

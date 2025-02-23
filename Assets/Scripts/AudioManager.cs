@@ -15,15 +15,13 @@ public class AudioManager : SingletonBehaviour<AudioManager>
 
     [Header("Audio Clip")]
     [SerializeField] AudioClip backgroundMusic;
-    [SerializeField] AudioClip boxCrashing;
-    [SerializeField] AudioClip characterFalling;
     [SerializeField] AudioClip walkingSound;
+    [SerializeField] AudioClip throwLightSound;
+    [SerializeField] AudioClip returnLightSound;
     [SerializeField] AudioClip characterRespawnSound;
-    [SerializeField] AudioClip CoinCollectSound;
-    [SerializeField] AudioClip DropCoinSound;
+    [SerializeField] AudioClip platformRotateSound;
+    [SerializeField] AudioClip gateSound;
 
-    // Track when the box crashing sound can be played again
-    private float nextBoxCrashingTime = 0f;
 
     private Dictionary<AudioClip, AudioSource> soundToSourceMap = new Dictionary<AudioClip, AudioSource>();
 
@@ -61,7 +59,6 @@ public class AudioManager : SingletonBehaviour<AudioManager>
         {
             AudioSource newSource = Instantiate(audioSourcePrefab, transform);
             audioSources.Add(newSource);
-            // Debug2.Log("Instantiated a new AudioSource.");
             return newSource;
         }
 
@@ -83,41 +80,6 @@ public class AudioManager : SingletonBehaviour<AudioManager>
         return false; // No source is playing the clip
     }
 
-    public void StopBoxCrashingSound()
-    {
-        foreach (var source in audioSources)
-        {
-            if (source.clip == boxCrashing && source.isPlaying)
-            {
-                source.Stop();  // Stop the sound
-                source.loop = false;  // Disable looping
-            }
-        }
-    }
-
-    public void PlayBoxCrashingSound()
-    {
-
-        AudioSource source = GetOrCreateAudioSource();
-        if (source != null && !IsSoundPlaying(boxCrashing))
-        {
-            source.loop = true; // Set the source to loop
-            source.clip = boxCrashing; // Assign the clip to the source
-            source.Play(); // Start playing the sound 
-                           // Calculate the next time this sound can be played based on the current time and the length of the clip
-            nextBoxCrashingTime = Time.time + boxCrashing.length - 1f;
-        }
-        else
-        {
-            Debug.LogWarning("Failed to create a new audio source.");
-        }
-
-    }
-
-    public void PlayCharacterFallSound()
-    {
-        PlaySound(characterFalling);
-    }
 
     public void PlayWalkingSound()
     {
@@ -129,13 +91,40 @@ public class AudioManager : SingletonBehaviour<AudioManager>
         PlaySound(characterRespawnSound);
     }
 
-    public void PlayCoinCollectSound()
+    public void PlayThrowingLightSound()
     {
-        PlaySound(CoinCollectSound);
+        PlaySound(throwLightSound);
     }
 
-    public void PlayDropCoinSound()
+    public void PlayReturnLightSound()
     {
-        PlaySound(DropCoinSound);
+        PlaySound(returnLightSound);
     }
+
+    public void PlayPlatformRotateSound()
+    {
+        PlaySound(platformRotateSound);
+    }
+    public void PlayGateSound()
+    {
+        PlaySound(gateSound);
+    }
+    public void PauseAllSounds()
+    {
+        foreach (var source in audioSources)
+        {
+            source.Pause();
+        }
+        musicSource.Pause();
+    }
+    public void ResumeAllSounds()
+    {
+        foreach (var source in audioSources)
+        {
+            if (source.clip != null)
+                source.UnPause();
+        }
+        musicSource.UnPause();
+    }
+
 }
