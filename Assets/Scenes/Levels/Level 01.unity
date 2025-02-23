@@ -12173,6 +12173,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 646264297393344927, guid: f6f158db4c61b7644bd8ce23608b2ba4,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
     - target: {fileID: 1697268961871599538, guid: f6f158db4c61b7644bd8ce23608b2ba4,
         type: 3}
       propertyPath: m_Name
@@ -12236,7 +12241,7 @@ PrefabInstance:
     - target: {fileID: 3769994804254377251, guid: f6f158db4c61b7644bd8ce23608b2ba4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.023
       objectReference: {fileID: 0}
     - target: {fileID: 3769994804254377251, guid: f6f158db4c61b7644bd8ce23608b2ba4,
         type: 3}

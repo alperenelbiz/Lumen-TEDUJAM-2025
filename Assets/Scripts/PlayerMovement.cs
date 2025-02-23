@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -82,12 +83,12 @@ public class PlayerMovement : MonoBehaviour
         if (direction != Vector3.zero)
             Move(direction);
     }
-    
+
     void Move(Vector3 direction)
     {
         if (isMoving) return;
 
-        Vector3 targetPosition = transform.position + (direction * gridSize).normalized;
+        Vector3 targetPosition = transform.position + (direction * gridSize);
 
         if (Physics.BoxCast(transform.position, Vector3.one * 0.25f, direction, Quaternion.identity, gridSize, obstacleLayer))
         {
@@ -98,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = true;
 
         targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        AudioManager.Instance.PlayWalkingSound();
+        //AudioManager.Instance.PlayWalkingSound();
         rb.DOJump(targetPosition, jumpPower, jumpCount, moveDuration)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
@@ -108,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
             });
 
         transform.DORotateQuaternion(targetRotation, moveDuration).SetEase(Ease.Linear);
-    }
+    } 
 
     void UpdateCameraPosition()
     {
