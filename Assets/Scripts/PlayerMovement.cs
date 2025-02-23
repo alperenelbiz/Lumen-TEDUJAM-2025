@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isMoving) return;
 
-        Vector3 targetPosition = transform.position + (direction * gridSize);
+        Vector3 targetPosition = transform.position + (direction * gridSize).normalized;
 
         if (Physics.BoxCast(transform.position, Vector3.one * 0.25f, direction, Quaternion.identity, gridSize, obstacleLayer))
         {
