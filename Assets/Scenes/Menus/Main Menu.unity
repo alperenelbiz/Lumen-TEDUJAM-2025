@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028474, g: 0.22571608, b: 0.30692413, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -156,11 +156,11 @@ Transform:
   m_GameObject: {fileID: 50167371}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -257.71893, y: 243.10034, z: -12.321294}
+  m_LocalPosition: {x: 717.6456, y: 787.8587, z: -2.9505014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2003374299}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &50167373
 AudioSource:
@@ -270,14 +270,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79f74fda9d89cc2418ad65c1a7b7410b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSourcePrefab: {fileID: 50167373}
-  musicSource: {fileID: 50167373}
+  audioSourcePrefab: {fileID: 7803353585209720070, guid: b54aed531de7faf468dd3e5d2bea7265,
+    type: 3}
+  musicSource: {fileID: -6873541024204005088, guid: f79d0cab8db9de244ad8fdb9fb28e899,
+    type: 3}
   audioSources: []
   backgroundMusic: {fileID: 8300000, guid: 07fef244824bb494293b0d8fbc502d03, type: 3}
   walkingSound: {fileID: 8300000, guid: 5addd42920d978448923e05e53890596, type: 3}
   throwLightSound: {fileID: 8300000, guid: 648c7ef079e4b463d8488f1725448fe3, type: 3}
   returnLightSound: {fileID: 8300000, guid: 648c7ef079e4b463d8488f1725448fe3, type: 3}
-  characterRespawnSound: {fileID: 0}
+  characterRespawnSound: {fileID: 8300000, guid: d1839a7a2cf1c4649872addfd1f64209,
+    type: 3}
   platformRotateSound: {fileID: 8300000, guid: 1870ea50e1d56471e9a57f1f1d3536ae, type: 3}
   gateSound: {fileID: 8300000, guid: 1870ea50e1d56471e9a57f1f1d3536ae, type: 3}
 --- !u!1 &72163199
@@ -1839,7 +1842,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 62, y: -87}
+  m_AnchoredPosition: {x: 116, y: -121}
   m_SizeDelta: {x: 364.528, y: 99.188}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &478451618
@@ -1896,11 +1899,11 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 18
+  m_characterSpacing: 5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2681,6 +2684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f157ef3303729e4449ad6699ceda11e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeCanvas: {fileID: 0}
+  fadeDuration: 1
 --- !u!4 &898304266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 33290391252290374, guid: ff0e794d77cf8a64aaa52d610c4376cd,
@@ -4487,7 +4492,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 50167372}
   - {fileID: 890434229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28463,6 +28467,7 @@ SceneRoots:
   - {fileID: 1313627789}
   - {fileID: 991768816}
   - {fileID: 72163202}
+  - {fileID: 50167372}
   - {fileID: 2003374299}
   - {fileID: 1353953420}
   - {fileID: 415419285}

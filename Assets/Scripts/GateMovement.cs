@@ -75,7 +75,7 @@ public class GateMovement : MonoBehaviour
 
         pair.isOpen = true;
 
-        //AudioManager.Instance.PlayGateSound();
+        AudioManager.Instance.PlayGateSound();
 
         pair.gate.transform.DOMoveY(pair.gate.transform.position.y - moveDistance, moveDuration)
             .SetEase(Ease.InOutQuad);

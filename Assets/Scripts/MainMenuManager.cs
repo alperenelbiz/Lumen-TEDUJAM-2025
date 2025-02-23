@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    public CanvasGroup fadeCanvas; // Assign in Inspector
+    public float fadeDuration = 1f;
+
     public void StartGame()
     {
         SceneManager.LoadScene("Tutorial"); // Replace with your game scene name
@@ -10,7 +13,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenLevels()
     {
-        SceneManager.LoadScene("levels"); // Replace with your levels menu scene name
+        SceneManager.LoadScene("Levels"); // Replace with your levels menu scene name
     }
 
     public void OpenSettings()

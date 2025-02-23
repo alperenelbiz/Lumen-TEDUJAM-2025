@@ -34,14 +34,20 @@ public class AudioManager : SingletonBehaviour<AudioManager>
     public void PlaySound(AudioClip clip)
     {
         AudioSource source = GetOrCreateAudioSource();
-        if (source != null)
+
+        if (source == null)
         {
-            source.PlayOneShot(clip);
+            Debug.LogWarning("Audio source is null or destroyed. Cannot play sound.");
+            return;
         }
-        else
+
+        if (!source.gameObject.activeInHierarchy)
         {
-            Debug.LogWarning("Failed to create a new audio source.");
+            Debug.LogWarning("Audio source is disabled. Enabling it.");
+            source.gameObject.SetActive(true);
         }
+
+        source.PlayOneShot(clip);
     }
 
     private AudioSource GetOrCreateAudioSource()
