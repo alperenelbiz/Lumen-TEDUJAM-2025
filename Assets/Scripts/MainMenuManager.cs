@@ -5,7 +5,7 @@ public class MainMenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("Level 1"); // Replace with your game scene name
+        SceneManager.LoadScene("Tutorial"); // Replace with your game scene name
     }
 
     public void OpenLevels()
