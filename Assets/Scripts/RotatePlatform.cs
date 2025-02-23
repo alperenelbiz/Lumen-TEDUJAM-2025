@@ -28,6 +28,7 @@ public class RotatePlatform : MonoBehaviour
             {
                 PlatformRotation(pair);
             }
+            else if(!isCorrectSpherePlaced) { pair.hasRotated = false; }
         }
     }
 
