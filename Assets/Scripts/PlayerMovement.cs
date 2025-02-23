@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UIElements;
+
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Movement Settings")]
@@ -8,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveDuration = 0.2f; 
     private bool isMoving = false;
     [SerializeField] private Rigidbody rb;
+    private Quaternion targetRotation;
     
     [Header("Camera Settings")]
 
@@ -24,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        targetRotation = transform.rotation;
         rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
@@ -48,8 +52,19 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         PlayerMove();
+        PlayerRotate();
     }
+    void PlayerRotate()
+    {
+        if (isMoving) return;
 
+        if (Input.GetKeyDown(KeyCode.E))
+            targetRotation *= Quaternion.Euler(0, 90, 0);
+        else if (Input.GetKeyDown(KeyCode.Q))
+            targetRotation *= Quaternion.Euler(0, -90, 0);
+
+        transform.DORotateQuaternion(targetRotation, moveDuration).SetEase(Ease.OutQuad);
+    }
     void PlayerMove()
     {
         if (isMoving) return;
@@ -67,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         if (direction != Vector3.zero)
             Move(direction);
     }
-
+    
     void Move(Vector3 direction)
     {
         if (isMoving) return;
@@ -82,9 +97,8 @@ public class PlayerMovement : MonoBehaviour
 
         isMoving = true;
 
-        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        //AudioManager.Instance.PlayWalkingSound();
-        // **Use Rigidbody to move instead of directly modifying transform**
+        targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+        AudioManager.Instance.PlayWalkingSound();
         rb.DOJump(targetPosition, jumpPower, jumpCount, moveDuration)
             .SetEase(Ease.Linear)
             .OnComplete(() =>

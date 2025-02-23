@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028373, g: 0.22571398, b: 0.30692294, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -275,11 +275,11 @@ MonoBehaviour:
   audioSources: []
   backgroundMusic: {fileID: 8300000, guid: 07fef244824bb494293b0d8fbc502d03, type: 3}
   walkingSound: {fileID: 8300000, guid: 5addd42920d978448923e05e53890596, type: 3}
-  throwLightSound: {fileID: 0}
-  returnLightSound: {fileID: 0}
+  throwLightSound: {fileID: 8300000, guid: 648c7ef079e4b463d8488f1725448fe3, type: 3}
+  returnLightSound: {fileID: 8300000, guid: 648c7ef079e4b463d8488f1725448fe3, type: 3}
   characterRespawnSound: {fileID: 0}
-  platformRotateSound: {fileID: 0}
-  gateSound: {fileID: 0}
+  platformRotateSound: {fileID: 8300000, guid: 1870ea50e1d56471e9a57f1f1d3536ae, type: 3}
+  gateSound: {fileID: 8300000, guid: 1870ea50e1d56471e9a57f1f1d3536ae, type: 3}
 --- !u!1 &72163199
 GameObject:
   m_ObjectHideFlags: 0

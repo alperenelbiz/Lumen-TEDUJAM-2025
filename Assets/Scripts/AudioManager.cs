@@ -11,7 +11,6 @@ public class AudioManager : SingletonBehaviour<AudioManager>
     [Header("Audio Source")]
     [SerializeField] AudioSource musicSource;
     [SerializeField] private List<AudioSource> audioSources = new List<AudioSource>();
-    //[SerializeField] AudioSource boxCrashingSource;
 
     [Header("Audio Clip")]
     [SerializeField] AudioClip backgroundMusic;
