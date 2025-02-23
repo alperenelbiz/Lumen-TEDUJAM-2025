@@ -15,6 +15,7 @@ public class ColorManager : MonoBehaviour
     }
 
     [SerializeField] private List<Lighter> lighters = new List<Lighter>();
+    private Dictionary<Lighter, VisualEffectAsset> lastAppliedVFX = new Dictionary<Lighter, VisualEffectAsset>();
 
     [SerializeField] private GameObject redObject, blueObject, greenObject;
 
@@ -74,6 +75,7 @@ public class ColorManager : MonoBehaviour
                     StopCoroutine(activeCoroutines[lighter]);
                 }
                 activeCoroutines[lighter] = StartCoroutine(FadeOutAndStop(lighter));
+                lastAppliedVFX[lighter] = null; 
                 continue;
             }
 
@@ -107,13 +109,14 @@ public class ColorManager : MonoBehaviour
                 targetVFX = greenVFX;
             }
 
-            if (lighter.vfxComponent.visualEffectAsset != targetVFX)
+            if (!lastAppliedVFX.ContainsKey(lighter) || lastAppliedVFX[lighter] != targetVFX)
             {
                 if (activeCoroutines.ContainsKey(lighter) && activeCoroutines[lighter] != null)
                 {
                     StopCoroutine(activeCoroutines[lighter]);
                     activeCoroutines.Remove(lighter);
                 }
+                lastAppliedVFX[lighter] = targetVFX;
                 activeCoroutines[lighter] = StartCoroutine(SmoothVFXTransition(lighter, targetVFX));
             }
         }
@@ -157,7 +160,6 @@ public class ColorManager : MonoBehaviour
             }
             yield return null;
         }
-
         lighter.vfxComponent.Stop();
     }
 }
